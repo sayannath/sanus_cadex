@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from tensorflow.python.keras.applications.vgg16 import preprocess_input
 from flask import Flask, redirect, url_for, request, render_template
 
 # Define a flask app
@@ -22,6 +23,7 @@ lst = ['Malignant','Beningn','no skin ']
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
+brainmodel = load_model("./model/tumor_prediction.h5")  
 pneumoniamodel = load_model("./model/Pneumonia-DENSENET.h5")  
 malarialmodel = load_model("./model/malariaModel.h5")         # Necessary
 
@@ -60,6 +62,23 @@ def pneumoniamodel_predict(img_path, model):
 
     preds = model.predict(x)
     return preds
+
+def brainmodel_predict(img_path, model):
+    img = image.load_img(img_path, target_size=(224, 224))
+
+    # Preprocessing the image
+    x = image.img_to_array(img)
+    # x = np.true_divide(x, 255)
+    x = np.expand_dims(x, axis=0)
+
+    # Be careful how your trained model deals with the input
+    # otherwise, it won't make correct prediction!
+    images = preprocess_input(x)
+    # images = np.vstack([x])
+
+    preds = model.predict(images, batch_size=16)
+    return preds
+
 
 
 @app.route('/pneumonia/', methods=['GET'])
@@ -162,7 +181,7 @@ def skin():
 
 @app.route("/skin/predict", methods=["POST"])
 def skinupload():
-    target = os.path.join(APP_ROOT, 'static/images/')
+    target = os.path.join(APP_ROOT, '/static')
     print(target)
     if not os.path.isdir(target):
             os.mkdir(target)
@@ -219,6 +238,36 @@ def skinupload():
     class3=round(prediction[0][2]*100,2)
     print(class1,class2,class3)
     return render_template("skin/complete_display_image.html",image_name=filename,class1=class1,class2=class2,class3=class3)
+
+@app.route("/brain/test" ,methods=['GET'])
+def brain():
+    # Main page
+    return render_template('brain/index.html')
+
+@app.route('/brain/predict', methods=['GET', 'POST'])
+def brainupload():
+    if request.method == 'POST':
+        # Get the file from post request
+        f = request.files['file']
+
+        # Save the file to ./uploads
+        basepath = os.path.dirname(__file__)
+        file_path = os.path.join(
+            basepath, 'uploads', secure_filename(f.filename))
+        f.save(file_path)
+
+        # Make prediction
+        preds = brainmodel_predict(file_path, brainmodel)
+
+        # Process your result for human
+        # pred_class = preds.argmax(axis=-1)            # Simple argmax
+        # pred_class = decode_predictions(preds, top=1)   # ImageNet Decode
+        # result = str(preds[0])
+        if preds[0][0] >= 0.9:
+            return "This image is NOT Tumorous."
+        elif preds[0][0] < 0.9:  # Convert to string
+            return "Warning! This image is tumorous."
+    return None
 
 
 if __name__ == '__main__':
