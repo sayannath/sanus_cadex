@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link href="{{ url_for('static', filename='skin/css/main.css') }}" rel="stylesheet" />
+<style>
+
+</style>
+</head>
+<body>
+
+
+<!-- navigation -->
+    
+<div class="container" style="padding-top: 10rem;margin-top:5% ;margin-left: 10%;">
+<div class="row">
+    <div class="col-8">
+    <h2 style="color: black;margin-bottom: 30px;">&#8618; Select <strong style="color:red;">Cancer Image</strong>  to start Diagonosis</h2>
+</div>
+</div>
+<div class="row">
+  <div class="col-2 col-sm-2 offset-1 offset-sm-1">
+<form id="upload-form" action="/skin/predict" method="POST" enctype="multipart/form-data">
+    <input id="file-picker" class="d-flex justify-content-center" type="file" name="file" accept="image/*" multiple>
+    <label for="file-picker" />choose a file</label>
+    <br>
+    <p>
+    <div id="msg"></div>
+    <input type="submit" value="Upload!" id="upload-button"></p>
+</form>
+</div>
+</div>
+<br><br><br>
+
+</div>
+
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+
+    $("#file-picker").change(function(){
+
+        var input = document.getElementById('file-picker');
+
+        for (var i=0; i<input.files.length; i++)
+        {
+        //koala.jpg, koala.JPG substring(index) lastIndexOf('a') koala.1.jpg
+            var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+
+            if ((ext == 'jpg') || (ext == 'png') || (ext == 'jpeg'))
+            {
+                $("#msg").text("Files are supported")
+            }
+            else
+            {
+                $("#msg").text("Files are NOT supported")
+                document.getElementById("file-picker").value ="";
+            }
+
+        }
+
+
+    } );
+
+    $("#ct_file-picker").change(function(){
+
+        var input = document.getElementById('ct_file-picker');
+
+        for (var i=0; i<input.files.length; i++)
+        {
+        //koala.jpg, koala.JPG substring(index) lastIndexOf('a') koala.1.jpg
+            var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+
+            if ((ext == 'jpg') || (ext == 'png') || (ext == 'jpeg'))
+            {
+                $("#ct_msg").text("Files are supported")
+            }
+            else
+            {
+                $("#ct_msg").text("Files are NOT supported")
+                document.getElementById("ct_file-picker").value ="";
+            }
+
+        }
+
+
+    } );
+
+</script>
+</html>
