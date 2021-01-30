@@ -6,7 +6,7 @@
     <title>Pneumonia Prediction</title>
     <link
       rel="icon"
-      href="../static/images/iot.jpeg"
+      href="../static/pneumonia/images/iot.jpeg"
       type="image/gif"
       sizes="16x16"
     />
@@ -17,7 +17,7 @@
     <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link href="../static/css/main.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='pneumonia/css/main.css') }}" rel="stylesheet" />
   </head>
 
   <body>
@@ -25,7 +25,7 @@
       <div class="container">
         <a class="navbar-brand" href="base.html">Pneumonia Prediction</a>
         <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
-          <a href="index.html">Help</a>
+          <a href="home.html">Home</a>
         </button>
       </div>
     </nav>
@@ -66,6 +66,6 @@
   </body>
 
   <footer>
-    <script src="../static/js/main.js" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='pneumonia/js/main.js') }}" type="text/javascript"></script>
   </footer>
 </html>
