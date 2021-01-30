@@ -10,7 +10,8 @@ from PIL import Image, ImageOps
 
 from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model 
+from keras.models import load_model as kl
 from tensorflow.keras.preprocessing import image
 from tensorflow.python.keras.applications.vgg16 import preprocess_input
 from flask import Flask, redirect, url_for, request, render_template
@@ -24,9 +25,9 @@ lst = ['Malignant','Beningn','no skin ']
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
-brainmodel = load_model("/model/tumor_prediction.h5")  
+brainmodel = kl("/model/tumor_prediction.h5")  
 pneumoniamodel = load_model("/model/Pneumonia-DENSENET.h5")  
-malarialmodel = load_model("/model/malariaModel.h5")         # Necessary
+malarialmodel = kl("/model/malariaModel.h5")         # Necessary
 
 def maleriamodel_predict(img_path, model):
     img = image.load_img(img_path, target_size=(130, 130))
