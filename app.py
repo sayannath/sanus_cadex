@@ -25,9 +25,9 @@ lst = ['Malignant','Beningn','no skin ']
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
-brainmodel = kl("/model/tumor_prediction.h5")  
-pneumoniamodel = load_model("/model/Pneumonia-DENSENET.h5")  
-malarialmodel = kl("/model/malariaModel.h5")         # Necessary
+brainmodel = kl("./model/tumor_prediction.h5")  
+pneumoniamodel = load_model("./model/Pneumonia-DENSENET.h5")  
+malarialmodel = kl("./model/malariaModel.h5")         # Necessary
 
 def maleriamodel_predict(img_path, model):
     img = image.load_img(img_path, target_size=(130, 130))
@@ -183,7 +183,7 @@ def skin():
 
 @app.route("/skin/predict", methods=["POST"])
 def skinupload():
-    target = os.path.join(APP_ROOT, '/static')
+    target = os.path.join(APP_ROOT, 'static')
     print(target)
     if not os.path.isdir(target):
             os.mkdir(target)
@@ -239,7 +239,7 @@ def skinupload():
     class2=round(prediction[0][1]*100,2)
     class3=round(prediction[0][2]*100,2)
     print(class1,class2,class3)
-    return render_template("skin/complete_display_image.html",image_name=filename,class1=class1,class2=class2,class3=class3)
+    return render_template("skin/result.html",image_name=filename,class1=class1,class2=class2,class3=class3)
 
 @app.route("/brain/test" ,methods=['GET'])
 def brain():

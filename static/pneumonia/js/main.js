@@ -1,7 +1,7 @@
 $(document).ready(function () {
   // Init
   $(".image-section").hide();
-  $(".loader").hide();
+  $("#loader").hide();
   $("#result").hide();
 
   // Upload Preview
@@ -24,6 +24,7 @@ $(document).ready(function () {
     $("#btn-predict").show();
     $("#result").text("");
     $("#result").hide();
+    $("#preresult").show();
     readURL(this);
   });
 
@@ -33,7 +34,8 @@ $(document).ready(function () {
 
     // Show loading animation
     $(this).hide();
-    $(".loader").show();
+    $("#preresult").hide();
+    $("#loader").show();
 
     // Make prediction by calling api /predict
     $.ajax({
@@ -46,9 +48,9 @@ $(document).ready(function () {
       async: true,
       success: function (data) {
         // Get and display the result
-        $(".loader").hide();
+        $("#loader").hide();
         $("#result").fadeIn(600);
-        $("#result").text(" Result:  " + data);
+        $("#result").text(data);
         console.log("Success!");
       },
     });
