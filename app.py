@@ -183,7 +183,7 @@ def skin():
 
 @app.route("/skin/predict", methods=["POST"])
 def skinupload():
-    target = os.path.join(APP_ROOT, 'static')
+    target = os.path.join(APP_ROOT, 'images')
     print(target)
     if not os.path.isdir(target):
             os.mkdir(target)
