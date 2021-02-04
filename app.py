@@ -183,7 +183,7 @@ def skin():
 
 @app.route("/skin/predict", methods=["POST"])
 def skinupload():
-    target = os.path.join(APP_ROOT, 'images')
+    target = os.path.join(APP_ROOT, 'static')
     print(target)
     if not os.path.isdir(target):
             os.mkdir(target)
@@ -203,7 +203,7 @@ def skinupload():
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
     # Replace this with the path to your image
-    folder='images'
+    folder='static'
     ex=folder+'/'+filename
     image = Image.open(ex)
     img=cv2.imread(ex)

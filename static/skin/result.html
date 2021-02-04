@@ -6,7 +6,8 @@
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <link href="{{ url_for('static', filename='skin/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='skin/vendor/2221mb/neumorphism.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='skin/css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='skin/css/custom2.css') }}" rel="stylesheet" />
+    
 
 
     <title>Document</title>
@@ -68,7 +69,11 @@
                 <div class="card bg-primary shadow-inset border-light text-center">
                     <div class="card-header">
                         <div class="profile-image bg-primary shadow-inset border border-light rounded mx-auto p-3 mt-n6">
-                            <div id="imagePreview"></div>
+                            <div id="imagePreview">
+                            <div id="prev" style="height: 100%;width: 100%;">
+                            <img src=" {{url_for('static', filename=image_name, class1=class1,class2=class2,class3=class3)}}" style="height: 100%;width: 100%;">
+                        </div>
+                        </div>
                         </div>
                     </div>
                     <div class="card-body pb-5">
@@ -76,7 +81,6 @@
                             <form id="upload-form" action="/skin/predict" method="POST" enctype="multipart/form-data">
                             
                             <input class="custom-file-input" id="file-picker" class="d-flex justify-content-center" type="file" name="file" accept="image/*" multiple >
-                            <div id="msg"></div>
                             <button class="btn btn-primary mr-3 mt-3 text-success" type="submit" id="btn-predict" id="upload-button">
                                 <span class="mr-1"><span class="far fa-check-circle"></span></span>
                                 Predict
@@ -100,15 +104,32 @@
                         <div class="pl-3 pl-sm-4 text-center">
                             <h3 class="h5">Result:</h3>
                             <h3 class="text-success" id="result"></h3>
-                            <h3 style="color: red;"> {{ class1 }} <strong style="color: black;">Percent Benign Type</strong></h3>
-                            <h3 style="color: green;"> {{ class2 }} <strong style="color: black;">Percent Malignant Type</strong></h3>
-                            <h3 style="color: blue;"> {{ class3 }} <strong style="color: black;">NOT Skin Cancer Type</strong></h3>
+                            
+                            <h3>Percent Benign Type</strong></h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped bg-dark" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style= "{{"width:" ~ class1 ~"% ; animation: 5s ease 0s 1 normal none running animate-positive"}}", opacity: "1"}}></div>
+                            </div>
+                            {{ class1 }}
+                            <h3 >Malignant Type</h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped bg-dark" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style= "{{"width:" ~ class2 ~"% ; animation: 5s ease 0s 1 normal none running animate-positive"}}", opacity: "1"}}></div>
+                            </div>
+                            {{ class2 }}
+                            <h3 >NOT Skin Cancer Type</h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped bg-dark" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style= "{{"width:" ~ class3 ~"% ; animation: 5s ease 0s 1 normal none running animate-positive"}}", opacity: "1"}}></div>
+                            </div>
+                            {{ class3 }}
                             <div class="progress-wrapper">
                         <div class="progress-info">
     
                         </div>
-                        <div id="loader" class="progress">
+                        <div id="loader">
+                        LOADING
+                        <div class="progress">
+                            
                             <div class="progress-bar progress-bar-striped bg-dark" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%; animation: 5s ease 0s 1 normal none running animate-positive;", opacity: "1"}}></div>
+                        </div>
                         </div>
                     </div>
                         </div>

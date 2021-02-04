@@ -24,6 +24,7 @@ $(document).ready(function () {
     $("#btn-predict").show();
     $("#result").text("");
     $("#result").hide();
+    $('#prev').hide();
     $("#preresult").show();
     readURL(this);
   });
