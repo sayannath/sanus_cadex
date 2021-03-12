@@ -1,2 +1,1 @@
-# Pnemonia-Detection-with-Flask
-CADx
+# Sanus - A CADx Platform
